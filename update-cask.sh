@@ -9,11 +9,17 @@ tag=${1:+v${1#v}}
 tag=${tag:-$(gh release view --repo "$repo" --json tagName --jq .tagName)}
 version=${tag#v}
 
-scratch=$(mktemp -d "${TMPDIR:-/tmp}/koi-cask.XXXXXX")
-trap 'rm -rf "$scratch"' EXIT HUP INT TERM
-gh release download "$tag" --repo "$repo" --pattern 'Koi-*.dmg' --dir "$scratch"
-arm=$(shasum -a 256 "$scratch/Koi-$version-arm64.dmg" | cut -d' ' -f1)
-intel=$(shasum -a 256 "$scratch/Koi-$version-x86_64.dmg" | cut -d' ' -f1)
+# GitHub records each asset's SHA-256, so nothing needs downloading.
+digest() {
+    sum=$(gh api "repos/$repo/releases/tags/$tag" \
+        --jq ".assets[] | select(.name == \"$1\") | .digest")
+    case "$sum" in
+        sha256:*) echo "${sum#sha256:}" ;;
+        *) echo "No SHA-256 recorded for $1 in $tag" >&2; exit 1 ;;
+    esac
+}
+arm=$(digest "Koi-$version-arm64.dmg")
+intel=$(digest "Koi-$version-x86_64.dmg")
 
 mkdir -p Casks
 
