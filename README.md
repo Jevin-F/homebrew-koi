@@ -11,3 +11,7 @@ brew install --cask jevin-f/koi/koi
 After a new Koi release is published, run `./update-cask.sh` (or
 `./update-cask.sh 0.2.0` for a specific version), then commit and push
 `Casks/koi.rb`. The script needs the GitHub CLI.
+
+## License
+
+[MIT](LICENSE)
