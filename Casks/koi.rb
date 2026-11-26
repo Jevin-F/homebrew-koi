@@ -1,9 +1,9 @@
 cask "koi" do
   arch arm: "arm64", intel: "x86_64"
 
-  version "0.1.0"
-  sha256 arm:   "9ba1e4810491f18ff1319d8eb749a51527f87cde2aeffbd2b4249db0b12d3a92",
-         intel: "fee9ff393f5ef71b6a6367ab489b2feb84034404012725c6dda21bcbe0811105"
+  version "0.1.1"
+  sha256 arm:   "bbedd3b7d3d3b9675b78359ab6eb90375bdb8117905c9aa98a4bc6d4afdd3ee7",
+         intel: "add87894cbe6b5e2432003f9076469ea4e0ab50a6356e4aa71e71e93dcf77977"
 
   url "https://github.com/Jevin-F/koi/releases/download/v#{version}/Koi-#{version}-#{arch}.dmg"
   name "Koi"
